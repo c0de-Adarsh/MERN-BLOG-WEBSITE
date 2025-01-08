@@ -5,6 +5,8 @@ const {generateToken} = require('../jwt')
 const jwt = require('jsonwebtoken')
 const cloudinary = require('cloudinary').v2
 require('dotenv').config()
+const fs = require('fs')
+const path = require('path')
 
 
 const signupUser = async(req, res) =>{
@@ -315,12 +317,115 @@ const deleteUser = async(req ,res) =>{
 
 
 
-cloudinary.config({ 
+
+
+
+  const createPost = async (req, res) => {
+
+     try {
+        
+        const newPostData = req.body
+
+        const newPost = new Post(newPostData)
+
+        const savePost = await newPost.save()
+
+        res.status(200).json({
+            success:true,
+            savePost
+        })
+     } catch (error) {
+        res.status(500).json({
+            message: "Error while creating post",
+            success: false,
+            error: error.message,
+        });
+     }
+  }
+
+  cloudinary.config({ 
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
     api_key: process.env.CLOUDINARY_API_KEY, 
     api_secret: process.env.CLOUDINARY_API_SECRET 
   });
 
-
   
-module.exports = {signupUser,loginUser,editUser,deleteUser,getUser,getUserStatus,logOrNot}
+ 
+  const uploadPostImages = async (req, res) => {
+    try {
+      // Check if file is provided
+      if (!req.files || !req.files.photo) {
+        return res.status(400).json({
+          message: 'No file uploaded',
+          success: false
+        });
+      }
+  
+      const file = req.files.photo;
+  
+      // Ensure the 'uploads' directory exists
+      const uploadDir = path.join(__dirname, 'uploads');
+      if (!fs.existsSync(uploadDir)) {
+        fs.mkdirSync(uploadDir);
+      }
+  
+      // Move the file to the 'uploads' directory before uploading to Cloudinary
+      const uploadPath = path.join(uploadDir, file.name);  // Use the correct path for your platform
+      file.mv(uploadPath, async (err) => {
+        if (err) {
+          return res.status(500).json({
+            message: 'Failed to move file',
+            success: false,
+            error: err.message
+          });
+        }
+  
+        // Upload the image to Cloudinary after moving it to a valid location
+        try {
+          const result = await cloudinary.uploader.upload(uploadPath);
+          
+          // Send back the secure URL of the uploaded image
+          res.json({
+            imageUrl: result.secure_url,
+            success: true
+          });
+        } catch (error) {
+          res.status(500).json({
+            message: 'Failed to upload image to Cloudinary',
+            success: false,
+            error: error.message
+          });
+        }
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Error uploading image",
+        success: false,
+        error: error.message,
+      });
+    }
+  };
+  
+
+   const updatePost = async (req , res) =>{
+      
+    try {
+        
+        const postId = req.params.id;
+
+        const post = User.findById(postId)
+
+        if(!post){
+            return res.status(401).json({
+                message:'Post Not Found',
+                message:false
+            })
+        }
+
+        
+    } catch (error) {
+        
+    }
+
+   }
+module.exports = {signupUser,loginUser,editUser,deleteUser,getUser,getUserStatus,logOrNot,createPost,uploadPostImages}

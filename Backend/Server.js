@@ -5,6 +5,7 @@ const db = require('./db')
 const cors = require('cors')
 require('dotenv').config()
 const route = require('./Routes/Route')
+console.log("Cloudinary API Key:", process.env.CLOUDINARY_API_KEY);
 
 const PORT = process.env.PORT || 5000
 
