@@ -1,6 +1,11 @@
 const bcrypt = require('bcrypt')
 const User = require('../Models/User')
+const Post = require('../Models/Post')
 const {generateToken} = require('../jwt')
+const jwt = require('jsonwebtoken')
+const cloudinary = require('cloudinary').v2
+require('dotenv').config()
+
 
 const signupUser = async(req, res) =>{
  
@@ -26,7 +31,14 @@ const signupUser = async(req, res) =>{
                 success:false
             })
         }
+        
+        const existUser = await User.findOne({email:email})
 
+        if(existUser){
+            return res.status(401).json({
+                message:'User already Exist'
+            })
+        }
         const token = generateToken(user)
         await user.save()
 
@@ -155,4 +167,160 @@ const editUser = async (req, res)=>{
 
 }
 
-module.exports = {signupUser,loginUser,editUser}
+const deleteUser = async(req ,res) =>{
+
+    try {
+        
+        const userId = req.params.id
+
+        //find the user 
+
+        const user = await User.findById(userId)
+
+        if(!user){
+            return res.status(401).json({
+                message:'User Not Found',
+                success:false
+            })
+        }
+
+        //delete all post with user 
+
+        await Post.deleteMany({username: user.username})
+
+        await User.findByIdAndDelete(userId)
+
+        res.status(200).json({
+            message:'User Delete Successfull',
+            success:true
+        })
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).json({
+            error:'Internal Server error',
+            success:false
+        })
+    }
+}
+
+
+  const getUser = async (req , res) =>{
+
+    try {
+        
+        const userId = req.params.id
+
+        //find the use by id
+
+        const user = await User.findById(userId)
+
+        if(!user){
+            return res.status(401).json({
+                message:'User Not Found',
+                success:false
+            })
+        }
+
+        //exclude the password
+
+        const {password , ...userDetails} = user._doc;
+
+        res.status(200).json({
+            message:'User retrive successfully',
+            success:true,
+            data:userDetails
+        })
+
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Internal server error",
+            success: false,
+            error: error.message,
+        })
+  }
+  }
+
+  const getUserStatus = async (req , res) =>{
+    
+     
+    try {
+        
+        const username = req.params.username
+
+        //find the user based on the username excluding password
+
+        const user = await User.findOne({username},{password:0})
+
+        if(!user){
+            return res.status(404).json({
+                message:'User Not Found',
+                success:false
+            })
+            
+        }
+         
+
+        res.status(200).json({
+            message:'User retrived Successfully',
+            success:true,
+            user
+        })
+       
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).json({
+            error:"Internal Server error",
+            success:false
+        })
+    }
+  }
+
+  const logOrNot = async(req , res)=>{
+
+    
+
+    try {
+
+        const authorization = req.headers.authorization
+
+        if(!authorization){
+            return res.status(401).json({
+                message:"Token Not Found"
+            })
+        }
+
+        const token = authorization.split(' ')[1]
+
+        if(!token){
+            return res.status(401).json({
+                message:'Unauthorized',
+                loggedIn:false
+            })
+        } else {
+            const decoded = jwt.verify(token,process.env.JWT_SECRET)
+            return res.json({
+                loggedIn:true,
+                message:true
+            })
+        }
+        
+    } catch (error) {
+        return res.json({
+            error:error.message,
+            loggedIn:false
+        })
+    }
+}
+
+
+
+cloudinary.config({ 
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+    api_key: process.env.CLOUDINARY_API_KEY, 
+    api_secret: process.env.CLOUDINARY_API_SECRET 
+  });
+
+
+  
+module.exports = {signupUser,loginUser,editUser,deleteUser,getUser,getUserStatus,logOrNot}
