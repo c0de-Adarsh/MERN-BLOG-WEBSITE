@@ -3,7 +3,12 @@ const router = express.Router()
 const upload = require('express-fileupload')
 
 
-const {signupUser,loginUser,editUser,deleteUser,getUser,getUserStatus,logOrNot,createPost,uploadPostImages} = require('../Controllers/userController')
+const {signupUser,loginUser,editUser,deleteUser,getUser,getUserStatus,logOrNot} = require('../Controllers/userController')
+const {createPost,updatePost,uploadPostImages,deletePost,getAllPost,getPostById} = require('../Controllers/postControllers')
+
+const {createCategory,getAllCategory} = require('../Controllers/categoryControllers')
+
+
 const {jwtAuthMiddleware} = require('../jwt');
 const fileUpload = require('express-fileupload');
 
@@ -17,6 +22,12 @@ router.route('/getuser/:id').get(getUser)
 router.route('/status/:username').get(jwtAuthMiddleware,getUserStatus)
 router.route('/logornot').get(logOrNot)
 router.route('/createpost').post(createPost)
+router.route('/updatepost/:id').put(updatePost)
+router.route('/deletepost/:id').delete(deletePost)
+router.route('/getallpost').get(getAllPost)
+router.route('/getpost/:id').get(getPostById)
+router.route('/createcatogory').post(createCategory)
+router.route('/getcatogory').get(getAllCategory)
 
 
 //cloudinary image upload route
