@@ -10,6 +10,7 @@ import Login from './Pages/Login'
 import LogOut from './Pages/LogOut'
 import Single from './Pages/Single'
 import HomePage from './Pages/HomePage'
+import Footer from './Components/Footer'
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
 
       <Route path='/post' element={<Single/>}/>
       </Routes>
+      <Footer/>
       </BrowserRouter>
     </div>
     </>

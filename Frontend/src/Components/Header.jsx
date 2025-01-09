@@ -3,7 +3,7 @@ import React from 'react'
 const Header = () => {
   return (
     <>
-     <div className='min-h-[70vh] bg-[url(/images/bg1.jpg)] bg-cover pt-14'>
+     <div className='min-h-[70vh] bg-[url(/images/icons.jpg)] bg-cover pt-14'>
         <div className='md:pt-20 pt-36'>
             <div className='flex justify-center gap-5 opacity-100 items-center flex-col'>
                 <div>
