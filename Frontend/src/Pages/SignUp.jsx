@@ -1,27 +1,46 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import API from '../utils'
+import { setRegAlertTrue } from '../slice'
 
 const SignUp = () => {
 
     const [username , setUserName] = useState('')
     const [email , setEmail] = useState('')
     const [password , setPassword] = useState('')
+    const [showAlert , setShowAlert] = useState('')
 
     const dispatch = useDispatch()
+          const navigate = useNavigate()
 
     const submitHandler = async(e) =>{
+     
          e.preventDefault()
          try {
             
-            const res = await axios.post(`${API}/signup`
+            const res = await axios.post(`${API}/signup`,{
+                username,
+                email,
+                password
+            })
 
-            )
+           setShowAlert('success')
          } catch (error) {
-            
+            setShowAlert("failed") ;
+            console.log("Error User already registered",error) 
          }
+
+         if(showAlert === 'success'){
+            dispatch(setRegAlertTrue())
+            return navigate('/login')
+         }
+         if(showAlert === "failed"){
+            setTimeout(()=>{
+                setShowAlert(null)
+            },3000)
+        }
     }
   return (
     <>

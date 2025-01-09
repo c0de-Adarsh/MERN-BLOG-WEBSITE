@@ -24,7 +24,7 @@ const NavBar = () => {
 
                 <Link className='hover:text-yellow-300' to="/">Home</Link>
                 <Link className='hover:text-yellow-300' to="/write">Write</Link>
-                <Link className='hover:text-yellow-300' to="/mypost">My Post</Link>
+                <Link className='hover:text-yellow-300' to="/mypost">MyPost</Link>
                 <Link className='hover:text-yellow-300' to="/about">About</Link>
             </ul>
 
