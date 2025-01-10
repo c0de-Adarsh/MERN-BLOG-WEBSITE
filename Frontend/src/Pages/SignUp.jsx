@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import API from '../utils'
@@ -45,7 +45,12 @@ const SignUp = () => {
                 dispatch(setRegAlertTrue())
                 return navigate('/login')
              }
+             
     }
+
+    useEffect(()=>{
+        
+    })
   return (
     <>
     <div className='min-h-screen w-full text-white bg-gray-950 pt-14'>
