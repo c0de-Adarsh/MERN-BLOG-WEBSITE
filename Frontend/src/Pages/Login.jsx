@@ -2,11 +2,12 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import API from '../utils'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setUserTrue } from '../slice'
 
 function Login() {
-
+  
+  //const regAlert = useSelector((state)=> state.profile.regAlert)
   const [username , setUserName] = useState('')
   const [password , setPassword] = useState('')
   const [showAlert , setShowAlert] = useState('')
