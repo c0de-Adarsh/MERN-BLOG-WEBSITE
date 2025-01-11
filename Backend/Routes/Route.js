@@ -13,6 +13,9 @@ const {jwtAuthMiddleware} = require('../jwt');
 const fileUpload = require('express-fileupload');
 
 router.use(fileUpload())
+router.use(fileUpload({
+    useTempFiles:true
+}))
 
 router.route('/signup').post(signupUser)
 router.route('/login').post(loginUser)

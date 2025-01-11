@@ -3,7 +3,10 @@ const app = express()
 const bodyParser = require('body-parser')
 const db = require('./db')
 const cors = require('cors')
+const cookieParser = require('cookie-parser')
 require('dotenv').config()
+
+
 const route = require('./Routes/Route')
 console.log("Cloudinary API Key:", process.env.CLOUDINARY_API_KEY);
 
@@ -15,6 +18,8 @@ app.use(bodyParser.json())
     origin:'http://localhost:5173',
     credentials:true
  }))
+
+ app.use(cookieParser())
 app.use(route)
 app.get('/',(req ,res)=>{
     res.send('Hello world')
