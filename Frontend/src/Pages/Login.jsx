@@ -29,9 +29,9 @@ function Login() {
       })
 
       setShowAlert('success')
-      localStorage.setItem("accesstoken",res.data.accesstoken)
+        localStorage.setItem("accesstoken",res.data.token)
       dispatch(setUserTrue())
-      
+      console.log(res.data)
     } catch (error) {
       setShowAlert('failed')
       console.log(error)

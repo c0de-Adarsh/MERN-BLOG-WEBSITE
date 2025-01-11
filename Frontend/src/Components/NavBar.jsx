@@ -12,47 +12,48 @@ const NavBar = () => {
 
 
 
-    
+
     const [toggle, setToggle] = useState(false)
     const [userToggle, setUserToggle] = useState(null)
-    const [logUserpic , setLogUserPic] = useState('')
+    const [logUserpic, setLogUserPic] = useState('')
 
 
+    console.log(userToggle)
+    useEffect(() => {
+        const getStatus = async () => {
+            try {
+                const res = await axios.get(`${API}/status`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('accesstoken')}`
+                    }
+                });
+                setLogUserPic(res.data.profilePic)
+            } catch (error) {
+                console.error('Error fetching status:', error.response?.data || error.message);
+            }
+        };
+        getStatus();
+    }, []);
 
-    useEffect(()=>{
-      const getStatus = async () =>{
-        try {
-            const res = await axios.get(`${API}/status`,{
-                headers:{
-                    Authorization: `Bearer ${localStorage.getItem('accesstoken')}`
-                }
-            })
-            console.log('get status',res)
-        } catch (error) {
-            console.log(error)
+
+    useEffect(() => {
+        const logornot = async () => {
+            try {
+                const res = await axios.get(`${API}/logornot`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('accesstoken')}`
+                    },
+                })
+
+                setUserToggle(res.data.loggedIn)
+            } catch (error) {
+                console.log(error)
+            }
         }
-      }
-       getStatus()
-    },[])
 
-    // useEffect(()=>{
-    //  const logornot = async () =>{
-    //     try {
-    //         const res = await axios.get(`${API}/logornot`,{
-    //             headers:{
-    //                 Authorization: `Bearer ${localStorage.getItem('accesstoken')}`
-    //             },
-    //         })
+        logornot()
 
-    //         console.log(res.data)
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    //  }
-
-    //  logornot()
-     
-    // },[])
+    }, [])
     return (
         <>
             <div>
@@ -79,14 +80,21 @@ const NavBar = () => {
 
                             <Link to='/user' className='w-9 h-9 rounded-full bg-cover'>
                                 <img className={`rounded-full bg-gray-800 object-cover max-h-full max-w-full ${userToggle ? 'flex' : 'hidden'}`} src="/images/pic.jpg" alt="" />
-                            </Link>
-                            <div>
+                            </Link>  
 
-                                <div className='md:flex hidden'>
-                                    <Link className='text-2xl font-semibold hover:text-yellow-300' to='/login'>Login</Link>
-                                    <span className='text-2xl font-semibold '>/</span>
-                                    <Link className='text-2xl font-semibold hover:text-yellow-300' to='/signup'>Signup</Link>
-                                </div>
+
+
+                            {/* agar user login ho gya to logout ka option show kara do */}
+                            <div>
+        
+                                {
+
+                                    userToggle ? (<Link className='hover:text-yellow-300 text-2xl font-semibold md:flex hidden'>Logout</Link>) : (<div className='md:flex hidden'>
+                                        <Link className='hover:text-yellow-300 text-2xl font-semibold' to="/Login">Login</Link>
+                                        <span className='text-2xl font-semibold'>/</span>
+                                        <Link className='hover:text-yellow-300 text-2xl font-semibold' to="/Register">Register</Link>
+                                    </div>)
+                                }
                             </div>
                         </div>
 
@@ -104,7 +112,7 @@ const NavBar = () => {
                     <ul className={`${toggle ? "flex" : "hidden"} md:hidden justify-center gap-7 items-center flex flex-col font-semibold py-3 text-2xl`}>
 
 
-                        <Link onClick={() => setToggle(!toggle)} to='/home'>Home</Link>
+                        <Link onClick={() => setToggle(!toggle)} to='/'>Home</Link>
                         <Link onClick={() => setToggle(!toggle)} to='/write'>Write</Link>
                         <Link onClick={() => setToggle(!toggle)} to='/mypost'>My Post</Link>
                         <Link onClick={() => setToggle(!toggle)} to='/about'>About</Link>
@@ -116,11 +124,7 @@ const NavBar = () => {
                                 <Link onClick={() => setToggle(!toggle)} to="/Register">Register</Link>
                             </div>)
                         }
-                        <div>
-                            <Link className='text-2xl font-semibold hover:text-yellow-300'>Login/</Link>
-
-                            <Link className='text-2xl font-semibold hover:text-yellow-300'>Signup</Link>
-                        </div>
+                       
 
                     </ul>
                 </div>
