@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import API from '../utils';
-import { setRegAlertTrue } from '../slice';
+import { setRegAlertTrue } from '../Slice';
 import { CgSpinnerTwo } from 'react-icons/cg';
 
 const SignUp = () => {
