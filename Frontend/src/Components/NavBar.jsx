@@ -18,7 +18,6 @@ const NavBar = () => {
     const [logUserpic, setLogUserPic] = useState('')
 
 
-    console.log(userToggle)
     useEffect(() => {
         const getStatus = async () => {
             try {
@@ -52,7 +51,8 @@ const NavBar = () => {
         }
 
         logornot()
-
+        const intervalId = setInterval(logornot, 1000);
+        return () => clearInterval(intervalId);
     }, [])
     return (
         <>
@@ -80,16 +80,16 @@ const NavBar = () => {
 
                             <Link to='/user' className='w-9 h-9 rounded-full bg-cover'>
                                 <img className={`rounded-full bg-gray-800 object-cover max-h-full max-w-full ${userToggle ? 'flex' : 'hidden'}`} src="/images/pic.jpg" alt="" />
-                            </Link>  
+                            </Link>
 
 
 
                             {/* agar user login ho gya to logout ka option show kara do */}
                             <div>
-        
+
                                 {
 
-                                    userToggle ? (<Link className='hover:text-yellow-300 text-2xl font-semibold md:flex hidden'>Logout</Link>) : (<div className='md:flex hidden'>
+                                    userToggle ? (<Link to='/logout' className='hover:text-yellow-300 text-2xl font-semibold md:flex hidden'>Logout</Link>) : (<div className='md:flex hidden'>
                                         <Link className='hover:text-yellow-300 text-2xl font-semibold' to="/Login">Login</Link>
                                         <span className='text-2xl font-semibold'>/</span>
                                         <Link className='hover:text-yellow-300 text-2xl font-semibold' to="/Register">Register</Link>
@@ -124,7 +124,7 @@ const NavBar = () => {
                                 <Link onClick={() => setToggle(!toggle)} to="/Register">Register</Link>
                             </div>)
                         }
-                       
+
 
                     </ul>
                 </div>
