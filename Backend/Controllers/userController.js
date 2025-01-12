@@ -239,40 +239,35 @@ const deleteUser = async(req ,res) =>{
   }
   }
 
-  const getUserStatus = async (req , res) =>{
-    
-     
+  const getUserStatus = async (req, res) => {
     try {
-        
-        const username = req.user
-
-        //find the user based on the username excluding password
-
-        const user = await User.findOne({username},{password:0})
-
-        if(!user){
-            return res.status(404).json({
-                message:'User Not Found',
-                success:false
-            })
-            
-        }
-         
-
-        res.status(200).json({
-            message:'User retrived Successfully',
-            success:true,
-            user
-        })
-       
+      const user = req.user; // Middleware se set hua user ka data
+  
+      if (!user) {
+        return res.status(404).json({
+          message: 'User Not Found',
+          success: false,
+        });
+      }
+  
+      res.status(200).json({
+        message: 'User retrieved Successfully',
+        success: true,
+        user: {
+          name: user.name, 
+          email: user.email,
+          _id: user._id,
+        },
+      });
     } catch (error) {
-        console.error(error.message)
-        res.status(500).json({
-            error:"Internal Server error",
-            success:false
-        })
+      console.error(error.message);
+      res.status(500).json({
+        error: 'Internal Server Error',
+        success: false,
+      });
     }
-  }
+  };
+  
 
   const logOrNot = async(req , res)=>{
 
