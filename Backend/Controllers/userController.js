@@ -244,7 +244,7 @@ const deleteUser = async(req ,res) =>{
      
     try {
         
-        const username = req.params.username
+        const username = req.user
 
         //find the user based on the username excluding password
 

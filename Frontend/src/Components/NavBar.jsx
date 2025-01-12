@@ -92,7 +92,7 @@ const NavBar = () => {
                                     userToggle ? (<Link to='/logout' className='hover:text-yellow-300 text-2xl font-semibold md:flex hidden'>Logout</Link>) : (<div className='md:flex hidden'>
                                         <Link className='hover:text-yellow-300 text-2xl font-semibold' to="/Login">Login</Link>
                                         <span className='text-2xl font-semibold'>/</span>
-                                        <Link className='hover:text-yellow-300 text-2xl font-semibold' to="/Register">Register</Link>
+                                        <Link className='hover:text-yellow-300 text-2xl font-semibold' to="/signup">Register</Link>
                                     </div>)
                                 }
                             </div>
