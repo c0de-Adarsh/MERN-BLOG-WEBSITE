@@ -20,7 +20,7 @@ const User = () => {
         }
       })
 
-     
+     console.log(res.data)
       setLogUserName(res.data.user.name)
       setLogUserEmail(res.data.user.email)
       setLogUserId(res.data._id)

@@ -254,7 +254,7 @@ const deleteUser = async(req ,res) =>{
         message: 'User retrieved Successfully',
         success: true,
         user: {
-          name: user.name, 
+          name: user.username, 
           email: user.email,
           _id: user._id,
         },
