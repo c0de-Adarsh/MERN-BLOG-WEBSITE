@@ -27,14 +27,14 @@ const jwtAuthMiddleware = async (req, res, next) => {
 
     try {
         const authorization = req.headers.authorization;
-        console.log('Authorization Header:', authorization);  // Debugging line
+        // console.log('Authorization Header:', authorization);  // Debugging line
 
         if (!authorization) {
             return res.status(401).json({ error: 'Token not found' });
         }
 
         const token = authorization.split(' ')[1];
-        console.log('Token:', token);  // Debugging line
+        // console.log('Token:', token);  // Debugging line
 
         if (!token) {
             return res.status(401).json({ error: 'Unauthorized' });
@@ -45,7 +45,7 @@ const jwtAuthMiddleware = async (req, res, next) => {
                 return res.status(401).json({ error: 'Invalid token' });
             }
 
-            console.log('Decoded Token:', decoded);  // Debugging line
+            // console.log('Decoded Token:', decoded);  // Debugging line
             const user = await User.findById(decoded.userId);
             if (!user) {
                 return res.status(404).json({ success: false, message: 'User not found' });
