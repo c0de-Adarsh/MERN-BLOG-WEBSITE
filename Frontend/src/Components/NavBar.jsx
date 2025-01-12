@@ -121,7 +121,7 @@ const NavBar = () => {
                             userToggle ? (<Link onClick={() => setToggle(!toggle)} to='/logout'>Logout</Link>) : (<div>
 
                                 <Link onClick={() => setToggle(!toggle)} to="/Login">Login/</Link>
-                                <Link onClick={() => setToggle(!toggle)} to="/Register">Register</Link>
+                                <Link onClick={() => setToggle(!toggle)} to="/signup">Register</Link>
                             </div>)
                         }
 
