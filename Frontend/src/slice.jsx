@@ -45,6 +45,9 @@ const Profileslice = createSlice({
     setPostCreAlertFalse: (state) => {
       state.postCreAlert = false;
     },
+    setUserDelAlertTrue: (state) => { // Added this missing reducer
+      state.userDelAlert = true;
+    },
     setUserDelAlertFalse: (state) => { // Added this missing reducer
       state.userDelAlert = false;
     },
@@ -63,7 +66,9 @@ export const {
   setPostDelAlertTrue,
   setPostCreAlertTrue,
   setPostCreAlertFalse,
-  setUserDelAlertFalse, 
+  setUserDelAlertFalse,
+  setUserDelAlertTrue,
+   
 } = Profileslice.actions;
 
 export default Profileslice.reducer;

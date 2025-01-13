@@ -33,7 +33,7 @@ function Login() {
         console.log("Access Token:", localStorage.getItem('accesstoken'));
 
       dispatch(setUserTrue())
-      console.log(res.data)
+      // console.log(res.data)
     } catch (error) {
       setShowAlert('failed')
       console.log(error)
