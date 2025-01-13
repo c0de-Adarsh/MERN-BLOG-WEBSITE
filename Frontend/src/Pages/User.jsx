@@ -27,11 +27,11 @@ const User = () => {
         }
       })
  
-      console.log('Response Data:', res.data);
+  
     
       setLogUserName(res.data.user.name)
       setLogUserEmail(res.data.user.email)
-      setLogUserId(res.data._id)
+      setLogUserId(res.data.user._id)
     
   
     }
@@ -43,6 +43,7 @@ const User = () => {
 
   
   const delAccount = async () =>{
+    console.log("Deleting User with ID:", logUserId);
     const res = await axios.delete(`${API}/delete/${logUserId}`)
     setOpenAlert(false)
     setRedirect(true)
