@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt')
 const User = require('../Models/User')
 const {generateToken} = require('../jwt')
 const jwt = require('jsonwebtoken')
-
+const Post = require('../Models/Post')
 
 
 const signupUser = async(req, res) =>{
