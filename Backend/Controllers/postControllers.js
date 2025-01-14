@@ -10,7 +10,7 @@ const Category = require('../Models/Category')
 const createPost = async (req, res) => {
 
     try {
-       
+      console.log("Received data:", req.body);
        const newPostData = req.body
 
        const newPost = new Post(newPostData)
@@ -22,6 +22,7 @@ const createPost = async (req, res) => {
            savePost
        })
     } catch (error) {
+      console.log(error)
        res.status(500).json({
            message: "Error while creating post",
            success: false,
@@ -54,7 +55,7 @@ const createPost = async (req, res) => {
      }
  
      const file = req.files.photo;
-     console.log(req.files)
+   
      // Ensure the 'uploads' directory exists
      const uploadDir = path.join(__dirname, 'uploads');
      if (!fs.existsSync(uploadDir)) {
