@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const upload = require('express-fileupload')
+
 
 
 const {signupUser,loginUser,editUser,deleteUser,getUser,getUserStatus,logOrNot} = require('../Controllers/userController')
@@ -12,7 +12,7 @@ const {createCategory,getAllCategory} = require('../Controllers/categoryControll
 const {jwtAuthMiddleware} = require('../jwt');
 const fileUpload = require('express-fileupload');
 
-router.use(fileUpload())
+
 router.use(fileUpload({
     useTempFiles:true
 }))

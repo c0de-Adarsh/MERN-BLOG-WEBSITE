@@ -30,7 +30,7 @@ function Login() {
 
       setShowAlert('success')
         localStorage.setItem("accesstoken",res.data.token)
-        console.log("Access Token:", localStorage.getItem('accesstoken'));
+        // console.log("Access Token:", localStorage.getItem('accesstoken'));
 
       dispatch(setUserTrue())
       // console.log(res.data)
