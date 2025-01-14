@@ -4,7 +4,7 @@ require('dotenv').config()
 const fs = require('fs')
 const path = require('path')
 const Category = require('../Models/Category')
-const multer = require('multer')
+
 
 
 const createPost = async (req, res) => {
@@ -31,26 +31,9 @@ const createPost = async (req, res) => {
  }
 
 
- //multer configuration 
   
 
- const storage = multer.diskStorage({
-   destination: function (req , res, cb){
-    const uploadDir = path.join(__dirname, 'uploads')
 
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir); // Ensure 'uploads' directory exists
-    }
-
-    cb(null, uploadDir);
-   },
-
-   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)); // Unique file name
-   }
- })
-
- const upload = multer({ storage: storage });
 
  cloudinary.config({ 
    cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
