@@ -2,7 +2,7 @@ import React from 'react'
 import Post from './Post'
 const Posts = ({ PostData }) => {
 
-console.log(PostData)
+
     return (
         <>
             <div className='bg-gray-900 flex justify-between pb-8  md:px-6 px-3 w-full'>
