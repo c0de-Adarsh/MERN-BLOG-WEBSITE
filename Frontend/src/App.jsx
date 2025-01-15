@@ -29,7 +29,7 @@ const App = () => {
       <Route path='/logout' element={<LogOut/>}/>
 
 
-      <Route path='/post' element={<Single/>}/>
+      <Route path='/post/:postId' element={<Single/>}/>
       </Routes>
       <Footer/>
       </BrowserRouter>
