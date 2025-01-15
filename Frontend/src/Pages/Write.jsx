@@ -124,7 +124,7 @@ const Write = () => {
 
 
               <div className='md:w-1/2'>
-                <textarea name="" className='rounded-md outline-none border border-white bg-gray-800 px-2 py-1 w-full' onChange={(e) => setDesc(e.target.value)} cols={60} rows={10} placeholder='Tell Your Story...' id=""></textarea>
+                <textarea name="" className='rounded-md outline-none border border-white bg-gray-800 px-2 py-1 w-full' onChange={(e) => setDesc(e.target.value)} cols={60} rows={10} placeholder='Tell Your Story...' ></textarea>
               </div>
 
               <div className='py-2'>

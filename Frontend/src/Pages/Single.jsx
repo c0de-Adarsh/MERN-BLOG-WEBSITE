@@ -15,7 +15,7 @@ const Single = () => {
         }
       })
 
-      console.log(res.data.user)
+      setLogUser(res.data.user)
     }
     getData()
   },[])

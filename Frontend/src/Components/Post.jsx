@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Post = ({image , Desc , title , createdAt , postId , user }) => {
+
+const Post = ({image, title, Desc, createdAt, user, postId  }) => {
   
   return (
    <>
@@ -22,6 +23,7 @@ const Post = ({image , Desc , title , createdAt , postId , user }) => {
 
       <div>
         <p className='px-1 text-left'>{Desc}</p>
+      
       </div>
       </Link>
     </div>
