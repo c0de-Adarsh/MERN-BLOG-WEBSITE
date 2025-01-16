@@ -75,7 +75,7 @@ function MyPost() {
       ShowMessage && (
 
         <div className='bg-red-500 text-white fixed top-28 z-10 px-3 py-2 text-center text-xl font-semibold rounded'>
-         Hey there! It looks like there are no posts yet. Why not <Link to='/write' className='font-bold underline'>Write</Link>one?
+         Hey there! It looks like there are no posts yet. Why not <Link to='/write' className='font-bold underline'>Write </Link>one?
         </div>
       ) }
      

@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 5000
 app.use(bodyParser.json())
 
  app.use(cors({
-    origin:'http://localhost:5173',
+    origin:'https://adarsh-blog-web.netlify.app',
     credentials:true
  }))
 

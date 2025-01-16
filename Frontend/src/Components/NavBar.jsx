@@ -65,7 +65,7 @@ const NavBar = () => {
                         </div>
                         <ul className='md:flex hidden justify-center gap-7 font-semibold py-3 text-2xl'>
                             <div>
-                                <Link><img src='/images/icons.png' alt="" className='md:h-8 md:w-10 h-8' /></Link>
+                                <Link to='/'><img src='/images/icons.png' alt="" className='md:h-8 md:w-10 h-8' /></Link>
                             </div>
 
                             <Link className='hover:text-yellow-300' to="/">Home</Link>
