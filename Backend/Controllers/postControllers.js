@@ -106,7 +106,7 @@ const createPost = async (req, res) => {
        
        const postId = req.params.id;
 
-       const post = User.findById(postId)
+       const post = Post.findById(postId)
 
        if(!post){
            return res.status(401).json({
@@ -214,50 +214,100 @@ const createPost = async (req, res) => {
   }
 
   
-  const getAllPost = async (req, res) => {
+  // const getAllPost = async (req, res) => {
   
-      try {
+  //     try {
         
-        const username = req.query.user
-        const catName = req.query.category
-        
-        let post;
+  //       const username = req.query.user
+  //       const catName = req.query.category
+         
+  //       console.log("Username Query:", username); // Debugging
+  //       console.log("Category Query:", catName); // Debugging
+  //       let post;
 
-        if(username){
-          
-          post = await Post.find({username})
-        } else if (catName){
+  //       if(username){
+  //         console.log("Fetching posts by username...");
+  //         post = await Post.find({username})
+  //         console.log("Posts by username:", post)
+  //       } else if (catName){
+  //         console.log("Fetching posts by category...");
+  //         post = await Post.find({
+  //           categories: {
+  //             $in: [catName],
+  //           }
+  //         })
+  //         console.log("Posts by category:", post);
+  //       } else {
+  //         // Fetch all posts if no query parameters are provided
+  //     post = await Post.find();
+  //     console.log("All posts:", post);
+  //       }
 
-          post = await Post.find({
-            categories: {
-              $in: [catName],
-            }
-          })
-        } else {
-          // Fetch all posts if no query parameters are provided
-      post = await Post.find();
-        }
 
-
-        res.status(200).json({
-          message: "Posts fetched successfully",
-          success: true,
-          post,
-        });
-      } catch (error) {
-        console.error("Error fetching posts:", error.message);
+  //       res.status(200).json({
+  //         message: "Posts fetched successfully",
+  //         success: true,
+  //         post,
+  //       });
+  //     } catch (error) {
+  //       console.error("Error fetching posts:", error.message);
 
     
-    return res.status(500).json({
-      message: "Error fetching posts",
-      success: false,
-      error: error.message,
-    });
-      }
+  //   return res.status(500).json({
+  //     message: "Error fetching posts",
+  //     success: false,
+  //     error: error.message,
+  //   });
+  //     }
      
-  }
+  // }
    
-
+  const getAllPost = async (req, res) => {
+    try {
+      const username = req.query.user; // Extract 'user' query parameter
+      const catName = req.query.category; // Extract 'category' query parameter
+  
+      console.log("Username Query:", username); // Debugging log
+      console.log("Category Query:", catName); // Debugging log
+  
+      let post;
+  
+      if (username) {
+        // Query posts by username
+        post = await Post.find({ username });
+        console.log("Posts by username:", post);
+      } else if (catName) {
+        // Query posts by category
+        post = await Post.find({
+          categories: {
+            $in: [catName],
+          },
+        });
+        console.log("Posts by category:", post);
+      } else {
+        // Query all posts if no filters provided
+        post = await Post.find();
+        console.log("All posts:", post);
+      }
+  
+      // Respond with fetched posts
+      res.status(200).json({
+        message: "Posts fetched successfully",
+        success: true,
+        post,
+      });
+    } catch (error) {
+      console.error("Error fetching posts:", error.message);
+  
+      // Respond with error
+      res.status(500).json({
+        message: "Error fetching posts",
+        success: false,
+        error: error.message,
+      });
+    }
+  };
+  
   const getPostById = async (req , res) =>{
       
     try {

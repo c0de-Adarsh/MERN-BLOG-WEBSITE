@@ -14,7 +14,7 @@ const Single = () => {
           Authorization: `Bearer ${localStorage.getItem('accesstoken')}`
         }
       })
-
+       //console.log(res.data.user)
       setLogUser(res.data.user)
     }
     getData()

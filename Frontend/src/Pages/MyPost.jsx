@@ -5,10 +5,11 @@ import { Link } from 'react-router-dom'
 import Posts from '../Components/Posts'
 
 
+
 function MyPost() {
 
   const [PostData , setPostData] = useState([])
-
+ 
   const [logUser , setLogUserName] = useState(null)
   const [ShowMessage , setShowMessage] = useState(false)
 
@@ -19,25 +20,38 @@ function MyPost() {
         Authorization: `Bearer ${localStorage.getItem("accesstoken")}`
       }
     })
-    setLogUserName(res.data.username)
+   
+    setLogUserName(res.data.user.name)
+    
+    //console.log(res.data.user.name)
+    
   }
 
   useEffect(()=>{
+   
     const fetchPost = async () =>{
       const res = await axios.get(`${API}/getallpost?user=${logUser}`)
-      setPostData(res.data)
-      console.log(res.data)
-    }
+      setPostData(res.data.post)
+      //console.log(res.data.post)
+     // console.log(PostData)
+    } 
     fetchPost()
     getData()
   },[logUser])
 
-  useEffect(()=>{
+  useEffect(() => {
+   // console.log('PostData:', logUser); //ostData when it updates
+  }, [PostData]); 
+
+
+
+  useEffect(()=>{  
+  
     if(PostData.length === 0){
       const timeoutId = setTimeout(()=>{
         setShowMessage (true)
       },3000)
-
+      
       return () => clearTimeout(timeoutId)
     }
   },[PostData])
@@ -61,10 +75,11 @@ function MyPost() {
       ShowMessage && (
 
         <div className='bg-red-500 text-white fixed top-28 z-10 px-3 py-2 text-center text-xl font-semibold rounded'>
-         Hey there! It looks like there are no posts yet. Why not <Link to='/write' className='font-bold underline'>Wtite</Link>one?
+         Hey there! It looks like there are no posts yet. Why not <Link to='/write' className='font-bold underline'>Write</Link>one?
         </div>
       ) }
-      {/* <Posts PostData={PostData} /> */}
+     
+     <Posts PostData={PostData}  />
    </div>
    </div>
    </>
