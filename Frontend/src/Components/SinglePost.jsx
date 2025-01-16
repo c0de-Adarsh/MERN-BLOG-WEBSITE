@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { data, useLocation, useNavigate } from 'react-router-dom'
 import API from '../utils'
 import { setPostDelAlertTrue } from '../Slice'
 import { AiOutlineDelete } from 'react-icons/ai'
@@ -33,9 +33,9 @@ const SinglePost = ({ logUser }) => {
       const res = await axios.get(`${API}/getpost/` + path)
 
       setPost(res.data.post)
-      console.log("Post username:", post.username);
-      console.log("Logged-in user username:", logUser.name);
-      
+     //console.log("Post username:", post.username);
+     // console.log("Logged-in user username:", logUser.name);
+
     }
     singlePost()
   }, [])
@@ -76,7 +76,13 @@ const SinglePost = ({ logUser }) => {
         desc: newDesc
 
       });
-      console.log('Post updated successfully', res);
+
+      setPost((prevPost) => ({
+        ...prevPost,
+        title: newTitle,
+        desc: newDesc
+      }));
+      //console.log('Post updated successfully', res);
       setUpdateAlert(true);
       setUpdateMode(false);
     } catch (error) {
@@ -85,8 +91,21 @@ const SinglePost = ({ logUser }) => {
   };
 
 
+const DelPost = async () =>{
+  const res = await axios.delete(`${API}/deletepost/`+path,{
+    data:{username:logUser.name}
+    
+  })
+ 
+  setOpenAlert(false)
+  setPostDel(true)
+  
+}
 
-
+if(PostDel){
+  dispatch(setPostDelAlertTrue())
+  navigate('/')
+}
 
 
   const openAlr = () => {
@@ -101,7 +120,7 @@ const SinglePost = ({ logUser }) => {
   return (
     <>
       <div>
-        
+
         {
           (post.length === 0) ? (
             <div className='flex justify-center items-center pt-28'>
@@ -114,7 +133,7 @@ const SinglePost = ({ logUser }) => {
 
                 {
 
-                  updateAlert && <p className='font-bold text-green-400 text-lg px-3 py-2 left-0  fixed'>Post Updated Successfully</p>
+                  updateAlert && <p className='font-bold bg-green-400 text-white  text-lg px-3 py-2 left-0  fixed'>Post Updated Successfully</p>
                 }
                 {
                   updateMode && <h1 className='text-center text-5xl md:text-6xl font-bold'>Edit your post</h1>
@@ -160,14 +179,14 @@ const SinglePost = ({ logUser }) => {
                     <div className='bg-gray-800 rounded-md text-center border pt-5 pb-2 text-2xl md:px-6 px-2 font-bold text-white'>
                       <p>Are you sure you want to delete this post</p>
                       <div className='flex gap-10 justify-center pt-8'>
-                        <button onClick={() => deletePost()} className='text-lg bg-red-600 text-white px-5 rounded-md py-1'>Yes</button>
+                        <button onClick={() =>DelPost()} className='text-lg bg-red-600 text-white px-5 rounded-md py-1'>Yes</button>
                         <button onClick={() => setOpenAlert(false)} className='text-lg bg-blue-600 px-5 rounded-md py-1'>No</button>
                       </div>
                     </div>
                   </div>
 
                 }
-                <div className='flex justify-center py-5'>
+                {/* <div className='flex justify-center py-5'>
                   <span className='text-center flex gap-7'>
                     {
 
@@ -180,24 +199,43 @@ const SinglePost = ({ logUser }) => {
                </div>):(<button className='px-2 md:text-2xl text-xl rounded-md md:w-52 w-32 py-1 bg-blue-600 font-bold' onClick={()=> EditPost()}>Edit Post </button>)):null
                }
 
+                  </span>
+                </div> */}
 
-                    {/* {
-                      post.username && logUser.username === post.username && (
-                        (updateMode) ? (
+
+                <div className='flex justify-center py-5'>
+                  <span className='text-center flex gap-7'>
+                    {
+                      (logUser.name === post.username) ? (
+                        !updateMode ? (
                           <div className='flex gap-10 pt-10'>
-                            <AiOutlineDelete onClick={() => setOpenAlert(true)} className='cursor-pointer text-red-500' size={30} />
-                            <FaRegEdit className='cursor-pointer text-green-500' onClick={() => setUpdateMode(true)} size={30} />
+                            {/* Delete Icon */}
+                            <AiOutlineDelete
+                              className='cursor-pointer text-red-500'
+                              size={33}
+                              onClick={() => setOpenAlert(true)}
+                            />
+                            {/* Edit Icon */}
+                            <FaRegEdit
+                              onClick={() => setUpdateMode(true)}
+                              className='cursor-pointer text-green-500'
+                              size={30}
+                            />
                           </div>
                         ) : (
-                          <button className='px-2 md:text-2xl text-xl rounded-md md:w-52 w-32 py-1 bg-blue-600 font-bold' onClick={() => EditPost()}>
+                          // Edit Post Button in Update Mode
+                          <button
+                            className='px-2 md:text-2xl text-xl rounded-md md:w-52 w-32 py-1 bg-blue-600 font-bold'
+                            onClick={() => EditPost()}
+                          >
                             Edit Post
                           </button>
                         )
-                      )
-                    } */}
-
+                      ) : null
+                    }
                   </span>
                 </div>
+
 
               </div>
             </div>)

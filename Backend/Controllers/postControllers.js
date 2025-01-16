@@ -267,15 +267,15 @@ const createPost = async (req, res) => {
       const username = req.query.user; // Extract 'user' query parameter
       const catName = req.query.category; // Extract 'category' query parameter
   
-      console.log("Username Query:", username); // Debugging log
-      console.log("Category Query:", catName); // Debugging log
+      // console.log("Username Query:", username); 
+      // console.log("Category Query:", catName); 
   
       let post;
   
       if (username) {
         // Query posts by username
         post = await Post.find({ username });
-        console.log("Posts by username:", post);
+        
       } else if (catName) {
         // Query posts by category
         post = await Post.find({
@@ -283,7 +283,7 @@ const createPost = async (req, res) => {
             $in: [catName],
           },
         });
-        console.log("Posts by category:", post);
+        
       } else {
         // Query all posts if no filters provided
         post = await Post.find();
@@ -307,6 +307,9 @@ const createPost = async (req, res) => {
       });
     }
   };
+  
+
+
   
   const getPostById = async (req , res) =>{
       
